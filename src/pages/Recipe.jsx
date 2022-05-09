@@ -10,7 +10,7 @@ function Recipe() {
 
 	const fetchDetails = async () => {
 		const data = await fetch(
-			`https://api.spoonacuar.com/recipes/${params.name}/information?apiKey=${process.env.REACT_APP_API_KEY}`
+			`https://api.spoonacular.com/recipes/${params.name}/information?apiKey=${process.env.REACT_APP_API_KEY}`
 		)
 		const detailData = await data.json()
 		setDetails(detailData)
@@ -39,6 +39,19 @@ function Recipe() {
 				>
 					Ingredients
 				</Button>
+				{activeTab === 'instructions' && (
+					<div>
+						<h3 dangerouslySetInnerHTML={{ __html: details.summary }}></h3>
+						<h3 dangerouslySetInnerHTML={{ __html: details.instructions }}></h3>
+					</div>
+				)}
+				{activeTab === 'ingredients' && (
+					<ul>
+						{details.extendedIngredients.map((ingredient) => (
+							<li key={ingredient.id}>{ingredient.original}</li>
+						))}
+					</ul>
+				)}
 			</Info>
 		</DetailWrapper>
 	)
